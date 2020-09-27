@@ -15,6 +15,15 @@ set -e
 # Print a welcome message.
 echo
 echo "The upgrade begins."
+echo
+echo '---------------------------------------------------'
+echo '  __          _______         _____ _      _____   '
+echo '  \ \        / /  __ \       / ____| |    |_   _|  '
+echo '   \ \  /\  / /| |__) |_____| |    | |      | |    '
+echo '    \ \/  \/ / |  ___/______| |    | |      | |    '
+echo '     \  /\  /  | |          | |____| |____ _| |_   '
+echo '      \/  \/   |_|           \_____|______|_____|  '
+echo '---------------------------------------------------'
 
 # Upgrade the package to the latest.
 wp cli update
