@@ -16,7 +16,21 @@ set -e
 echo
 echo "Uninstallation begins."
 
-# ...
+# Stop the package.
+systemctl stop sendmail
+
+# Remove the package completely.
+apt remove sendmail
+apt purge sendmail
+apt autoremove
+
+# If the directory still exists, delete it.
+if [ -d /etc/sendmail ]; then
+  rm -rf /etc/sendmail
+fi
+
+# Load the changed configuration file.
+systemctl reload apache2
 
 # Print a completion message.
 echo
