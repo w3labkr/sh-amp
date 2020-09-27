@@ -39,8 +39,8 @@ Opening the following ports is optional.
 This script requires root permission.
 ```
 $ sudo su
-$ git clone https://github.com/w3labkr/sh-amp-init.git
-$ cd sh-amp-init
+$ git clone https://github.com/w3labkr/amp-init.git
+$ cd amp-init
 $ chmod +x ./*.sh
 $ ./install.sh
 ```
