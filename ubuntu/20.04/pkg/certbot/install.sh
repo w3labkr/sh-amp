@@ -16,7 +16,17 @@ set -e
 echo
 echo "Installation begins."
 
-# ...
+# Install certbot
+# https://www.vultr.com/docs/setup-letsencrypt-on-linux
+apt update && apt -y install certbot python-certbot-apache
+
+# Install Certificate
+#certbot --apache --redirect -d example.com -d www.example.com -m admin@example.com --agree-tos
+
+# Verify Automatic Renewal
+#systemctl list-timers | grep 'certbot\|ACTIVATES'
+#ls -l /etc/cron.d/certbot
+#certbot renew --dry-run
 
 # Print a completion message.
 echo
