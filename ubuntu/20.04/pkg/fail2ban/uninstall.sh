@@ -16,7 +16,21 @@ set -e
 echo
 echo "Uninstallation begins."
 
-# ...
+# Stop the package.
+systemctl stop fail2ban
+
+# Remove the package completely.
+apt remove fail2ban
+apt purge fail2ban
+apt autoremove
+
+# If the directory still exists, delete it.
+if [ -d /etc/fail2ban ]; then
+  rm -rf /etc/fail2ban
+fi
+
+# Load the changed configuration file.
+systemctl reload apache2
 
 # Print a completion message.
 echo
