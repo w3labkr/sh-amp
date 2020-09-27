@@ -25,6 +25,32 @@ if [! command -v git &>/dev/null]; then
   exit 1
 fi
 
+#
+# lsb_release command is only work for Ubuntu platform but not in centos
+# so you can get details from /etc/os-release file
+# following command will give you the both OS name and version-
+#
+# https://askubuntu.com/questions/459402/how-to-know-if-the-running-platform-is-ubuntu-or-centos-with-help-of-a-bash-scri
+OS_NAME="$(cat /etc/os-release | awk -F '=' '/^NAME=/{print $2}' | awk '{print $1}' | tr -d '"')"
+
+if [ "${OS_NAME}" == "Ubuntu" ]; then
+  OS_ID="ubuntu"
+  OS_VERSION_ID="$(cat /etc/os-release | awk -F '=' '/^VERSION_ID=/{print $2}' | awk '{print $1}' | tr -d '"')"
+  OS_VERSION_NUMBER="${OS_VERSION_ID//./}"
+  if [ "${OS_VERSION_NUMBER}" -lt "1804" ]; then
+    echo "Sorry. Not supported on Ubuntu below 18.04."
+    exit 0
+  else
+    OS_VERSION_ID="18.04"
+  fi
+elif [ "${OS_NAME}" == "CentOS" ]; then
+  echo "Sorry. Not supported on CentOS."
+  exit 0
+else
+  echo "Sorry. Not supported on ${OS_NAME}."
+  exit 0
+fi
+
 # Print a welcome message.
 echo
 echo "The update begins."
