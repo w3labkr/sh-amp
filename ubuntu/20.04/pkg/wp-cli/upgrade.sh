@@ -14,10 +14,14 @@ set -e
 
 # Print a welcome message.
 echo
-echo "The update begins."
+echo "The upgrade begins."
 
-# ...
+# Upgrade the package to the latest.
+wp cli update
+
+# Load the changed configuration file.
+systemctl reload apache2
 
 # Print a completion message.
 echo
-echo "The update is complete."
+echo "The upgrade is complete."
