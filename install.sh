@@ -33,18 +33,14 @@ fi
 # https://askubuntu.com/questions/459402/how-to-know-if-the-running-platform-is-ubuntu-or-centos-with-help-of-a-bash-scri
 OS_NAME="$(cat /etc/os-release | awk -F '=' '/^NAME=/{print $2}' | awk '{print $1}' | tr -d '"')"
 
-if [ "${OS_NAME}" == "Ubuntu" ]; then
-  OS_ID="ubuntu"
+if [ "${OS_NAME,,}" == "ubuntu" ]; then
   OS_VERSION_ID="$(cat /etc/os-release | awk -F '=' '/^VERSION_ID=/{print $2}' | awk '{print $1}' | tr -d '"')"
-  OS_VERSION_NUMBER="${OS_VERSION_ID//./}"
-  if [ "${OS_VERSION_NUMBER}" -lt "1804" ]; then
+  if [ "${OS_VERSION_ID//./}" -lt "1804" ]; then
     echo "Sorry. Not supported on Ubuntu below 18.04."
     exit 0
-  else
-    OS_VERSION_ID="20.04"
   fi
-elif [ "${OS_NAME}" == "CentOS" ]; then
-  echo "Sorry. Not yet supported on CentOS."
+elif [ "${OS_NAME,,}" == "centos" ]; then
+  echo "Sorry. Not supported on CentOS."
   exit 0
 else
   echo "Sorry. Not supported on ${OS_NAME}."
@@ -69,20 +65,24 @@ echo '                                                   '
 echo '---------------------------------------------------'
 
 # Set the arguments.
-OS_DIR="${OS_ID}/${OS_VERSION_ID}/os"
-PKG_DIR="${OS_ID}/${OS_VERSION_ID}/pkg"
+OS_VERSION_ID="20.04"
+OS_DIR="${OS_NAME,,}/${OS_VERSION_ID}/os"
+PKG_DIR="${OS_NAME,,}/${OS_VERSION_ID}/pkg"
 FILE="$(basename $0)"
 
 if [ "${#@}" -eq "0" ]; then
-
   # Run the operating system installation script.
   bash "${OS_DIR}/${FILE}"
 
   # Run the package installation script.
   PACKAGES=('apache2' 'cerbot' 'fail2ban' 'mariadb' 'php' 'sendmail' 'vsftpd' 'wp-cli')
-
   for ((i = 0; i < ${#PACKAGES[@]}; i++)); do
-    bash "${PKG_DIR}/${PACKAGES[$i]}/${FILE}"
+    FILEPATH="${PKG_DIR}/${PACKAGES[$i]}/${FILE}"
+    if [ ! -f "${FILEPATH}" ]; then
+      echo "${FILEPATH} does not exist."
+      exit 0
+    fi
+    bash "${FILEPATH}"
   done
 
   # Print a completion message.
@@ -105,12 +105,17 @@ fi
 # It runs only if there are parameters.
 for arg in "${@}"; do
   case "$arg" in
-  --os)
+  --[oO][sS])
     bash "${OS_DIR}/${FILE}"
     ;;
   --*)
     PACKAGE="$(echo "$arg" | sed -E 's/--//')"
-    bash "${PKG_DIR}/${PACKAGE,,}/${FILE}"
+    FILEPATH="${PKG_DIR}/${PACKAGE,,}/${FILE}"
+    if [ ! -f "${FILEPATH}" ]; then
+      echo "${FILEPATH} does not exist."
+      exit 0
+    fi
+    bash "${FILEPATH}"
     ;;
   esac
 done
