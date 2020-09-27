@@ -16,7 +16,19 @@ set -e
 echo
 echo "Uninstallation begins."
 
-# ...
+# Stop the package.
+systemctl stop apache2
+systemctl stop apache-htcacheclean
+
+# Remove the package completely.
+apt remove apache2
+apt purge apache2
+apt autoremove
+
+# If the directory still exists, delete it.
+if [ -d /etc/apache2 ]; then
+  rm -rf /etc/apache2
+fi
 
 # Print a completion message.
 echo
