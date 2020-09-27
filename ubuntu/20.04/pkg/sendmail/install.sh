@@ -16,7 +16,19 @@ set -e
 echo
 echo "Installation begins."
 
-# ...
+# Start installing the package.
+apt -y install sendmail
+
+# Start the package and set it to start on boot.
+systemctl stop sendmail
+systemctl start sendmail
+systemctl enable sendmail
+
+# Create backup and configuration files.
+cp -v /etc/mail/local-host-names{,.bak}
+
+# Load the changed configuration file.
+systemctl reload apache2
 
 # Print a completion message.
 echo
