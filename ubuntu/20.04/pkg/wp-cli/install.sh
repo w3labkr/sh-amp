@@ -15,6 +15,15 @@ set -e
 # Print a welcome message.
 echo
 echo "Installation begins."
+echo
+echo '---------------------------------------------------'
+echo '  __          _______         _____ _      _____   '
+echo '  \ \        / /  __ \       / ____| |    |_   _|  '
+echo '   \ \  /\  / /| |__) |_____| |    | |      | |    '
+echo '    \ \/  \/ / |  ___/______| |    | |      | |    '
+echo '     \  /\  /  | |          | |____| |____ _| |_   '
+echo '      \/  \/   |_|           \_____|______|_____|  '
+echo '---------------------------------------------------'
 
 # Once you've verified requirements, download the wp-cli.phar file using wget or curl:
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar

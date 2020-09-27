@@ -14,7 +14,7 @@ set -e
 
 # Print a welcome message.
 echo
-echo "The upgrade begins."
+echo "The update begins."
 echo
 echo '---------------------------------------------------'
 echo '  __          _______         _____ _      _____   '
@@ -25,12 +25,8 @@ echo '     \  /\  /  | |          | |____| |____ _| |_   '
 echo '      \/  \/   |_|           \_____|______|_____|  '
 echo '---------------------------------------------------'
 
-# Upgrade the package to the latest.
-wp cli update
-
-# Load the changed configuration file.
-systemctl reload apache2
+# ...
 
 # Print a completion message.
 echo
-echo "The upgrade is complete."
+echo "The update is complete."
