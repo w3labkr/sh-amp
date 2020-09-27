@@ -15,6 +15,15 @@ set -e
 # Print a welcome message.
 echo
 echo "Installation begins."
+echo
+echo '-------------------------------------------'
+echo '   __  __            _           _ _       '
+echo '  |  \/  |          (_)         | | |      '
+echo '  | \  / | __ _ _ __ _  __ _  __| | |__    '
+echo '  | |\/| |/ _  |  __| |/ _  |/ _  |  _ \   '
+echo '  | |  | | (_| | |  | | (_| | (_| | |_) |  '
+echo '  |_|  |_|\__,_|_|  |_|\__,_|\__,_|_.__/   '
+echo '-------------------------------------------'
 
 # Start installing the package.
 apt -y install mariadb-server mariadb-client

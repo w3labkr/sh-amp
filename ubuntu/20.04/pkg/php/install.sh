@@ -15,6 +15,16 @@ set -e
 # Print a welcome message.
 echo
 echo "Installation begins."
+echo
+echo '--------------------------'
+echo '   _____  _    _ _____    '
+echo '  |  __ \| |  | |  __ \   '
+echo '  | |__) | |__| | |__) |  '
+echo '  |  ___/|  __  |  ___/   '
+echo '  | |    | |  | | |       '
+echo '  |_|    |_|  |_|_|       '
+echo '                          '
+echo '--------------------------'
 
 # Installing php extensions for amp.
 apt -y install php php-common libapache2-mod-php php-mysql
