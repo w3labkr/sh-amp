@@ -16,7 +16,11 @@ set -e
 echo
 echo "The update begins."
 
-# ...
+# Upgrade operating system to the latest.
+apt update && apt -y upgrade
+
+# Removing unused dependencies
+apt -y autoremove
 
 # Print a completion message.
 echo

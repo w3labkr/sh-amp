@@ -14,10 +14,17 @@ set -e
 
 # Print a welcome message.
 echo
-echo "The update begins."
+echo "The upgrade begins."
 
-# ...
+# Stop the package.
+systemctl stop apache2
+
+# Upgrade the package to the latest.
+apt -y install --only-upgrade apache2 ssl-cert certbot libapache2-mpm-itk
+
+# Start the package.
+systemctl start apache2
 
 # Print a completion message.
 echo
-echo "The update is complete."
+echo "The upgrade is complete."
