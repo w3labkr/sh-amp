@@ -23,7 +23,9 @@ apt -y install mariadb-server mariadb-client
 /usr/bin/mysql_secure_installation
 
 # Start the package and set it to start on boot.
-systemctl boot mariadb
+systemctl stop mariadb
+systemctl start mariadb
+systemctl enable mariadb
 
 # Create backup and configuration files.
 cp -v /etc/my.cnf{,.bak}
