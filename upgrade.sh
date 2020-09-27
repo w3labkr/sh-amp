@@ -1,11 +1,11 @@
 #!/bin/bash
 #
 # Download and run the latest release version.
-# https://github.com/w3labkr/sh-amp-init
+# https://github.com/w3labkr/amp-init
 #
 # Usage
-# git clone https://github.com/w3labkr/sh-amp-init.git
-# cd sh-amp-init
+# git clone https://github.com/w3labkr/amp-init.git
+# cd amp-init
 # chmod +x ./update.sh
 # ./update.sh
 
