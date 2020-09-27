@@ -25,6 +25,32 @@ if [! command -v git &>/dev/null]; then
   exit 1
 fi
 
+#
+# lsb_release command is only work for Ubuntu platform but not in centos
+# so you can get details from /etc/os-release file
+# following command will give you the both OS name and version-
+#
+# https://askubuntu.com/questions/459402/how-to-know-if-the-running-platform-is-ubuntu-or-centos-with-help-of-a-bash-scri
+OS_NAME="$(cat /etc/os-release | awk -F '=' '/^NAME=/{print $2}' | awk '{print $1}' | tr -d '"')"
+
+if [ "${OS_NAME}" == "Ubuntu" ]; then
+  OS_ID="ubuntu"
+  OS_VERSION_ID="$(cat /etc/os-release | awk -F '=' '/^VERSION_ID=/{print $2}' | awk '{print $1}' | tr -d '"')"
+  OS_VERSION_NUMBER="${OS_VERSION_ID//./}"
+  if [ "${OS_VERSION_NUMBER}" -lt "1804" ]; then
+    echo "Sorry. Not supported on Ubuntu below 18.04."
+    exit 0
+  else
+    OS_VERSION_ID="20.04"
+  fi
+elif [ "${OS_NAME}" == "CentOS" ]; then
+  echo "Sorry. Not yet supported on CentOS."
+  exit 0
+else
+  echo "Sorry. Not supported on ${OS_NAME}."
+  exit 0
+fi
+
 # Recursive chmod to make all .sh files in the directory executable.
 find ./ -type f -name "*.sh" -exec chmod +x {} +
 
@@ -42,7 +68,52 @@ echo '      \/  \/ \___|_|\___\___/|_| |_| |_|\___| (_)  '
 echo '                                                   '
 echo '---------------------------------------------------'
 
-# ...
+# Set the arguments.
+OS_DIR="${OS_ID}/${OS_VERSION_ID}/os"
+PKG_DIR="${OS_ID}/${OS_VERSION_ID}/pkg"
+FILE="$(basename $0)"
+
+if [ "${#@}" -eq "0" ]; then
+
+  # Run the operating system installation script.
+  bash "${OS_DIR}/${FILE}"
+
+  # Run the package installation script.
+  PACKAGES=('apache2' 'cerbot' 'fail2ban' 'mariadb' 'php' 'sendmail' 'vsftpd' 'wp-cli')
+
+  for ((i = 0; i < ${#PACKAGES[@]}; i++)); do
+    bash "${PKG_DIR}/${PACKAGES[$i]}/${FILE}"
+  done
+
+  # Print a completion message.
+  echo
+  echo "Installation is complete."
+  echo
+  echo '-------------------------------------------------------------------------------'
+  echo '   _    _                                 _                _               _   '
+  echo '  | |  | |                               (_)              | |             | |  '
+  echo '  | |__| | __ ___   _____    __ _   _ __  _  ___ ___    __| | __ _ _   _  | |  '
+  echo '  |  __  |/ _  \ \ / / _ \  / _  | |  _ \| |/ __/ _ \  / _  |/ _  | | | | | |  '
+  echo '  | |  | | (_| |\ V /  __/ | (_| | | | | | | (_|  __/ | (_| | (_| | |_| | |_|  '
+  echo '  |_|  |_|\__,_| \_/ \___|  \__,_| |_| |_|_|\___\___|  \__,_|\__,_|\__, | (_)  '
+  echo '                                                                    __/ |      '
+  echo '                                                                   |___/       '
+  echo '-------------------------------------------------------------------------------'
+  exit 0
+fi
+
+# It runs only if there are parameters.
+for arg in "${@}"; do
+  case "$arg" in
+  --os)
+    bash "${OS_DIR}/${FILE}"
+    ;;
+  --*)
+    PACKAGE="$(echo "$arg" | sed -E 's/--//')"
+    bash "${PKG_DIR}/${PACKAGE,,}/${FILE}"
+    ;;
+  esac
+done
 
 # Print a completion message.
 echo
