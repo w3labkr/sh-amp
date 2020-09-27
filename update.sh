@@ -1,11 +1,11 @@
 #!/bin/bash
 #
 # Download and run the latest release version.
-# https://github.com/username/repository
+# https://github.com/w3labkr/sh-amp-init
 #
 # Usage
-# git clone https://github.com/username/repository.git
-# cd repository
+# git clone https://github.com/w3labkr/sh-amp-init.git
+# cd sh-amp-init
 # chmod +x ./update.sh
 # ./update.sh
 
@@ -27,7 +27,7 @@ fi
 
 # Print a welcome message.
 echo
-echo "The repository package begins to update."
+echo "The update begins."
 
 # Update the latest release version.
 git reset --hard HEAD
@@ -38,4 +38,4 @@ find ./ -type f -name "*.sh" -exec chmod +x {} +
 
 # Print a completion message.
 echo
-echo "The repository package has been completely upgraded."
+echo "The update is complete."
