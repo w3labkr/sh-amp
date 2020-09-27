@@ -14,10 +14,10 @@ set -e
 
 # Print a welcome message.
 echo
-echo "The update begins."
+echo "The upgrade begins."
 
 # ...
 
 # Print a completion message.
 echo
-echo "The update is complete."
+echo "The upgrade is complete."
