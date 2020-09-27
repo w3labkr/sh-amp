@@ -16,7 +16,21 @@ set -e
 echo
 echo "Uninstallation begins."
 
-# ...
+# Stop the package.
+systemctl stop vsftpd
+
+# Remove the package completely.
+apt remove vsftpd
+apt purge vsftpd
+apt autoremove
+
+# If the directory still exists, delete it.
+if [ -d /etc/vsftpd ]; then
+  rm -rf /etc/vsftpd
+fi
+
+# Load the changed configuration file.
+systemctl reload apache2
 
 # Print a completion message.
 echo
