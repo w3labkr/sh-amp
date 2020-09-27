@@ -16,7 +16,21 @@ set -e
 echo
 echo "Uninstallation begins."
 
-# ...
+# Stop the package.
+systemctl stop mariadb
+
+# Remove the package completely.
+apt remove mariadb
+apt purge mariadb
+apt autoremove
+
+# If the directory still exists, delete it.
+if [ -d /etc/mariadb ]; then
+  rm -rf /etc/mariadb
+fi
+
+# Load the changed configuration file.
+systemctl reload apache2
 
 # Print a completion message.
 echo
