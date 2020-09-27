@@ -14,10 +14,20 @@ set -e
 
 # Print a welcome message.
 echo
-echo "The update begins."
+echo "The upgrade begins."
 
-# ...
+# Stop the package.
+systemctl stop fail2ban
+
+# Upgrade the package to the latest.
+apt -y install --only-upgrade fail2ban whois
+
+# Start the package.
+systemctl start fail2ban
+
+# Load the changed configuration file.
+systemctl reload apache2
 
 # Print a completion message.
 echo
-echo "The update is complete."
+echo "The upgrade is complete."
