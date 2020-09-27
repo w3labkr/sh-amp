@@ -16,7 +16,20 @@ set -e
 echo
 echo "Installation begins."
 
-# ...
+# Start installing the package.
+apt -y install fail2ban whois
+
+# Start the package and set it to start on boot.
+systemctl stop fail2ban
+systemctl start fail2ban
+systemctl enable fail2ban
+
+# Create backup and configuration files.
+cp -v /etc/fail2ban/jail.conf{,.bak}
+cp -v /etc/fail2ban/jail.local{,.bak}
+
+# Load the changed configuration file.
+systemctl reload apache2
 
 # Print a completion message.
 echo
