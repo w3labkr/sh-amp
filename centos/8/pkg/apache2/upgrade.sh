@@ -14,7 +14,7 @@ set -e
 
 # Print a welcome message.
 echo
-echo "The upgrade begins."
+echo "The update begins."
 echo
 echo '-----------------------------------------------'
 echo '                             _          ___    '
@@ -27,15 +27,8 @@ echo '           | |                                 '
 echo '           |_|                                 '
 echo '-----------------------------------------------'
 
-# Stop the package.
-systemctl stop apache2
-
-# Upgrade the package to the latest.
-apt -y install --only-upgrade apache2 ssl-cert certbot libapache2-mpm-itk
-
-# Start the package.
-systemctl start apache2
+# ...
 
 # Print a completion message.
 echo
-echo "The upgrade is complete."
+echo "The update is complete."

@@ -14,7 +14,7 @@ set -e
 
 # Print a welcome message.
 echo
-echo "Uninstallation begins."
+echo "The update begins."
 echo
 echo '------------------------------------'
 echo '  __      __   __ _             _   '
@@ -27,22 +27,8 @@ echo '                     | |            '
 echo '                     |_|            '
 echo '------------------------------------'
 
-# Stop the package.
-systemctl stop vsftpd
-
-# Remove the package completely.
-apt remove vsftpd
-apt purge vsftpd
-apt autoremove
-
-# If the directory still exists, delete it.
-if [ -d /etc/vsftpd ]; then
-  rm -rf /etc/vsftpd
-fi
-
-# Load the changed configuration file.
-systemctl reload apache2
+# ...
 
 # Print a completion message.
 echo
-echo "Removal is complete."
+echo "The update is complete."
